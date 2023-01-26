@@ -19,15 +19,15 @@ static void init_nvs(void)
     }
 }
 
-void reset_creds(void){
-    nvs_flash_erase();
-}
-
 static void memory_task(void *pvParameters) {
     while (1) {
         ESP_LOGI(TAG, "Free %.2f KB / Minimum: %.2f KB", xPortGetFreeHeapSize() / 1024.f, xPortGetMinimumEverFreeHeapSize() / 1024.f);
         vTaskDelay(2500 / portTICK_RATE_MS);
     }
+}
+
+void reset_creds(void){
+    nvs_flash_erase();
 }
 
 void app_main(void) {
