@@ -1,2 +1,3 @@
 /build
 /sdkconfig.old
+!/build/iot_main.bin

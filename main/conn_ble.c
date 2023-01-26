@@ -10,7 +10,7 @@ static const char* TAG = "ble";
 
 static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if, esp_ble_gatts_cb_param_t *param);
 
-static esp_attr_value_t gatts_demo_char1_val ={
+static esp_attr_value_t gatts__char1_val ={
     .attr_max_len = 1024,
     .attr_len     = sizeof(char1_str),
     .attr_value   = char1_str,
@@ -202,7 +202,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
         esp_err_t add_char_ret = esp_ble_gatts_add_char(gl_profile_tab[PROFILE_ID].service_handle, &gl_profile_tab[PROFILE_ID].char_uuid,
                                                         ESP_GATT_PERM_READ | ESP_GATT_PERM_WRITE,
                                                         a_property,
-                                                        &gatts_demo_char1_val, NULL);
+                                                        &gatts__char1_val, NULL);
         if (add_char_ret){
             ESP_LOGE(TAG, "add char failed, error code =%x",add_char_ret);
         }
@@ -223,7 +223,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
             ESP_LOGE(TAG, "ILLEGAL HANDLE");
         }
 
-        ESP_LOGI(TAG, "the gatts demo char length = %xTAG", length);
+        ESP_LOGI(TAG, "the gatts  char length = %xTAG", length);
         for(int i = 0; i < length; i++){
             ESP_LOGI(TAG, "prf_char[%x] =%xTAG",i,prf_char[i]);
         }
