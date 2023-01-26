@@ -1,3 +1,3 @@
-/build
-/sdkconfig.old
-!/build/iot_main.bin
+build/*
+!*build/iot_main.bin
+sdkconfig.old
