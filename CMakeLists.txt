@@ -4,5 +4,3 @@ cmake_minimum_required(VERSION 3.5)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(iot_main)
-
-set(PROJECT_VER "0_0_5")
