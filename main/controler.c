@@ -56,6 +56,27 @@ float ble_temp_read(void){
     return valid? temp : 0.0;
 }
 
+void wrong_creds(void *pvParameters) {
+    gpio_set_level(8, 1);   
+    while(!WIFI_CONNECTED) {
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+    vTaskDelete(NULL);
+
+
+}
+
+void no_ssid(void *pvParameters) {
+    while(!WIFI_CONNECTED) {
+        gpio_set_level(8, 1);   
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        gpio_set_level(8, 0);   
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+    vTaskDelete(NULL);
+
+}
+
 void controler_task(void *pvParameters) {
 
     float temp;

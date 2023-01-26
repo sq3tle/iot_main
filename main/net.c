@@ -56,7 +56,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         ESP_LOGI(TAG, "Disconnected. Connecting to the AP again...");
         WIFI_CONNECTED = false;
         retries++;
-        if (retries >= 10) {
+        if (retries >= 3) {
                     ESP_LOGI(TAG, "Failed to connect with saved AP");
                     ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_MIN_MODEM));
                     provision();

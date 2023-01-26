@@ -26,6 +26,7 @@
 
 void controler_task(void *pvParameters);
 float ble_temp_read(void);
-
+void no_ssid(void *pvParameters);
+void wrong_creds(void *pvParameters);
 
 

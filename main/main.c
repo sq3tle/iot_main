@@ -34,7 +34,7 @@ void reset_creds(void){
 void app_main(void) {
     
     init_nvs(); 
-
+    ESP_LOGI(TAG, "NOWA WERSJA");
     if (esp_reset_reason() == ESP_RST_DEEPSLEEP)
     {
         init_ble();
