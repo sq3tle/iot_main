@@ -26,7 +26,7 @@
 #define USE_SQ3TLE_OTA_SERVER false
 
 // atomic 
-bool relay_channel0;3
+bool relay_channel0;
 bool relay_channel1;
 
 // not atomic - check safety in risc-v
