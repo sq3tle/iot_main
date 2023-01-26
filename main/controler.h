@@ -2,7 +2,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-
 //common
 #include "esp_log.h"
 #include <stdio.h>

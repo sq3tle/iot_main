@@ -21,12 +21,12 @@
 #include "esp_http_client.h"
 #include "esp_https_ota.h"
 #include "esp_wifi.h"
-#include "esp_crt_bundle.h"
 
+//ota server selection
 #define USE_SQ3TLE_OTA_SERVER false
 
 // atomic 
-bool relay_channel0;
+bool relay_channel0;3
 bool relay_channel1;
 
 // not atomic - check safety in risc-v

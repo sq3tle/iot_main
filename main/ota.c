@@ -5,6 +5,8 @@ static const char* TAG = "ota";
 #if USE_SQ3TLE_OTA_SERVER
 extern const uint8_t server_cert_pem_start[] asm("_binary_lets_encrypt_cert_pem_start");
 extern const uint8_t server_cert_pem_end[] asm("_binary_lets_encrypt_cert_pem_end");
+#else
+#include "esp_crt_bundle.h"
 #endif
 
 static esp_err_t compare_version(esp_app_desc_t *new_app_info)

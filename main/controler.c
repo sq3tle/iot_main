@@ -18,8 +18,8 @@ static spi_transaction_t spi_trans = {
 static void spi_init() {
     spi_bus_config_t buscfg = {
         .miso_io_num =  THERMOCOUPLE_MISO_PIN,
-        .mosi_io_num = -1,
         .sclk_io_num = THERMOCOUPLE_SCK_PIN,
+        .mosi_io_num = -1,
         .quadwp_io_num = -1,
         .quadhd_io_num = -1,
         .max_transfer_sz = (4 * 8)
