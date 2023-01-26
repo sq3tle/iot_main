@@ -34,7 +34,7 @@
 #define GATTS_SERVICE_UUID 0x181A
 #define GATTS_CHAR_UUID 0x2A6E
 #define GATTS_DESCR_UUID 0x3333
-#define DEVICE_NAME "Lodownik"
+#define DEVICE_NAME "Lodo"
 
 //deep sleep times
 #define FULL_CYCLE_TIME 20000 
