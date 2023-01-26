@@ -1,4 +1,5 @@
 #include "net.h"
+#include "controler.h"
 
 static const char *TAG = "network";
 static EventGroupHandle_t wifi_event_group;
@@ -55,7 +56,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         ESP_LOGI(TAG, "Disconnected. Connecting to the AP again...");
         WIFI_CONNECTED = false;
         retries++;
-        if (retries >= 3) {
+        if (retries >= 10) {
                     ESP_LOGI(TAG, "Failed to connect with saved AP");
                     ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_MIN_MODEM));
                     provision();
@@ -100,7 +101,7 @@ void init_network(void)
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
     wifi_event_group = xEventGroupCreate();
-
+    
     ESP_ERROR_CHECK(esp_event_handler_register(WIFI_PROV_EVENT, ESP_EVENT_ANY_ID, &event_handler, NULL));
     ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &event_handler, NULL));
     ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &event_handler, NULL));

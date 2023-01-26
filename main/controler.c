@@ -1,5 +1,5 @@
 #include "controler.h"
-
+#include "net.h"
 #include "main.h"
 
 static const char* TAG = "ctrl";
@@ -65,11 +65,16 @@ void controler_task(void *pvParameters) {
     gpio_set_direction(RELAY_CH0_PIN, GPIO_MODE_OUTPUT);
     gpio_set_direction(RELAY_CH1_PIN, GPIO_MODE_OUTPUT);
 
+    gpio_set_direction(8, GPIO_MODE_OUTPUT);
+    gpio_set_level(8, 0);   
+
     adc1_config_channel_atten(ADC1_CHANNEL_3, ADC_ATTEN_DB_11);
     esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_DEFAULT, 0, &adc_cal);
 
     while(1) {
         read_thermocouple(&temp, &valid);
+
+        gpio_set_level(8, !WIFI_CONNECTED);   
 
         if (!valid){
             ESP_LOGE(TAG, "temp invalid");
@@ -86,7 +91,7 @@ void controler_task(void *pvParameters) {
         
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
-    
+
     vTaskDelete(NULL);
 
 }

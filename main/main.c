@@ -10,6 +10,7 @@ float ext_adc = 0.0;
 float temp_setpoint = 0.0;
 float temp = 0.0;
 
+
 static void init_nvs(void)
 {
     esp_err_t ret = nvs_flash_init();
@@ -39,7 +40,6 @@ void app_main(void) {
         init_ble();
         return;
     }
-
     init_network();
     xTaskCreate(memory_task, "memory_task", 2048, NULL, 20, NULL);
     xTaskCreate(mqtt_task, "mqtt_task", 2048, NULL, 15, NULL);
