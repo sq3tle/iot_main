@@ -1,4 +1,6 @@
 #include "main.h"
+#include "esp_tls.h"
+#include "esp_crt_bundle.h"
 
 static const char* TAG = "ota";
 extern const uint8_t server_cert_pem_start[] asm("_binary_lets_encrypt_cert_pem_start");
@@ -30,8 +32,11 @@ void firmware_update_task(void *pvParameter){
     
     esp_err_t ota_finish_err = ESP_OK;
     esp_http_client_config_t config = {
-        .url = "https://ota.sq3tle.dev/iot_main.bin",
-        .cert_pem = (char *)server_cert_pem_start,
+        
+        .url = "https://github.com/sq3tle/iot_main/raw/master/build/iot_main.bin",
+        config.crt_bundle_attach = esp_crt_bundle_attach,
+        //.url = "https://ota.sq3tle.dev/iot_main.bin",
+        //.cert_pem = (char *)server_cert_pem_start,
         .keep_alive_enable = true,
         .skip_cert_common_name_check = false,
         .timeout_ms = 1500
