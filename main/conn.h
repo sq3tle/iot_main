@@ -37,7 +37,7 @@
 #define DEVICE_NAME "Lodo"
 
 //deep sleep times
-#define FULL_CYCLE_TIME 20000 
+#define FULL_CYCLE_TIME 30000 
 #define AWAKE_CYCLE_TIME 15000
 
 //definitions for mqtt
