@@ -21,6 +21,9 @@
 #include "esp_http_client.h"
 #include "esp_https_ota.h"
 #include "esp_wifi.h"
+#include "esp_crt_bundle.h"
+
+#define USE_SQ3TLE_OTA_SERVER false
 
 // atomic 
 bool relay_channel0;
@@ -30,8 +33,6 @@ bool relay_channel1;
 float ext_adc;
 float temp_setpoint;
 float temp;
-
-
 
 void firmware_update_task(void *pvParameter);
 void reset_creds(void);
