@@ -26,7 +26,7 @@
 
 bool WIFI_CONNECTED;
 
-#define PROVISION_PREFIX "PROV_L"
+#define PROVISION_PREFIX "PROV_L_"
 
 void init_network(void); 
 void provision(void);

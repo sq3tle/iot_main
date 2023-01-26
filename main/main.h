@@ -29,7 +29,7 @@
 bool relay_channel0;
 bool relay_channel1;
 
-// not atomic - check safety in risc-v
+// not atomic - but safe acording to risc-v specs
 float ext_adc;
 float temp_setpoint;
 float temp;
