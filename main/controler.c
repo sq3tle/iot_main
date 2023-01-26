@@ -86,6 +86,8 @@ void controler_task(void *pvParameters) {
         
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
+    
+    vTaskDelete(NULL);
 
 }
 

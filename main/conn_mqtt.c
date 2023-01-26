@@ -104,4 +104,6 @@ void mqtt_task(void *pvParameters) {
             ESP_LOGI(TAG,"data submited");
             vTaskDelay(5000 / portTICK_RATE_MS);
     }
+
+    vTaskDelete(NULL);
 }
