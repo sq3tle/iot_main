@@ -1,9 +1,11 @@
 #include "net.h"
 #include "controler.h"
+#include "oled.h"
 
 static const char *TAG = "network";
 static EventGroupHandle_t wifi_event_group;
 bool WIFI_CONNECTED = false;
+
 
 static void event_handler(void* arg, esp_event_base_t event_base,
                           int32_t event_id, void* event_data) {
@@ -50,13 +52,32 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         xEventGroupSetBits(wifi_event_group, BIT0);
         WIFI_CONNECTED = true;
         retries = 0;
+        oled_clear();
+        oled_show("wifi connected", 14, 0);
 
     } 
     else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
-        ESP_LOGI(TAG, "Disconnected. Connecting to the AP again...");
+
         WIFI_CONNECTED = false;
+
+        wifi_event_sta_disconnected_t* event = (wifi_event_sta_disconnected_t*) event_data;
+        if(event->reason == WIFI_REASON_NO_AP_FOUND) {
+            ESP_LOGI(TAG, "AP not found");
+            oled_clear();
+            oled_show("No wifi found!", 13, 0);
+        }
+        else if (event->reason == WIFI_REASON_AUTH_FAIL || event->reason == WIFI_REASON_4WAY_HANDSHAKE_TIMEOUT)
+        {
+            ESP_LOGI(TAG, "AP Authentication failed");
+            oled_clear();
+            oled_show("Wrong wifi", 10, 0);
+            oled_show("password!", 10, 1);
+        }
+        
+        ESP_LOGI(TAG, "Disconnected. Connecting to the AP again... %i",event->reason);
+        
         retries++;
-        if (retries >= 3) {
+        if (retries >= 20) {
                     ESP_LOGI(TAG, "Failed to connect with saved AP");
                     ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_MIN_MODEM));
                     provision();

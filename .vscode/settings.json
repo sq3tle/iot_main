@@ -10,7 +10,7 @@
     "idf.pythonBinPathWin": "C:\\Users\\sq3tl\\.espressif\\python_env\\idf4.3_py3.8_env\\Scripts\\python.exe",
     "idf.toolsPathWin": "C:\\Users\\sq3tl\\.espressif",
     "cmake.configureOnOpen": true,
-    "idf.portWin": "COM13",
+    "idf.portWin": "COM12",
     "idf.flashType": "UART",
     "files.associations": {
         "*.inc": "c",
@@ -49,6 +49,8 @@
         "esp_https_ota.h": "c",
         "manager.h": "c",
         "main.h": "c",
-        "task.h": "c"
+        "task.h": "c",
+        "oled.h": "c",
+        "complex": "c"
     }
 }

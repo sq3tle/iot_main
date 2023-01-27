@@ -51,13 +51,14 @@
 #define MQTT_TOPIC_CTRL_RELAY "lodownik/relay1"
 
 //subsciption topics
-#define MQTT_TOPIC_USER_RELAY "lodownik/relay0"
-#define MQTT_TOPIC_TEMP_SETPOINT "lodownik/setpoint"
-#define MQTT_TOPIC_SLEEP "lodownik/system/sleep"
-#define MQTT_TOPIC_RESET "lodownik/system/reset"
-#define MQTT_TOPIC_OTA "lodownik/system/ota"
+#define MQTT_TOPIC_USER_RELAY "lodownik/relay0" // 2 przyciski off on
+#define MQTT_TOPIC_TEMP_SETPOINT "lodownik/setpoint" //value + przycisk set
+#define MQTT_TOPIC_SLEEP "lodownik/system/sleep" //przycisk
+#define MQTT_TOPIC_RESET "lodownik/system/reset" //przycisk
+#define MQTT_TOPIC_OTA "lodownik/system/ota" //przycisk
 
-void mqtt_task(void *pvParameters);
+void mqtt_subscriber(void *pvParameters);
+void mqtt_publisher(void *pvParameters);
 void init_ble(void);
 
 

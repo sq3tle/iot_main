@@ -1,6 +1,7 @@
 #include "net.h"
 #include "conn.h"
 #include "controler.h"
+#include "oled.h"
 
 static const char* TAG = "main";
 
@@ -34,15 +35,22 @@ void reset_creds(void){
 void app_main(void) {
     
     init_nvs(); 
-    ESP_LOGI(TAG, "NOWA WERSJA");
     if (esp_reset_reason() == ESP_RST_DEEPSLEEP)
     {
         init_ble();
         return;
     }
+    oled_init();
+    
+    oled_clear();
+    oled_show("nowa wersja", 8, 0);
+    vTaskDelay(2500 / portTICK_RATE_MS);
+
     init_network();
+
     xTaskCreate(memory_task, "memory_task", 2048, NULL, 20, NULL);
-    xTaskCreate(mqtt_task, "mqtt_task", 2048, NULL, 15, NULL);
+    xTaskCreate(mqtt_publisher, "mqtt_publisher", 2048, NULL, 20, NULL);
+    xTaskCreate(mqtt_subscriber, "mqtt_subscriber", 2048, NULL, 15, NULL);
     xTaskCreate(controler_task, "controler_task", 2048, NULL, 5, NULL);
 
 }

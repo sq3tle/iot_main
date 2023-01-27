@@ -66,15 +66,33 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 }
 
 static void mqtt_send_data(const char *topic, float value){
-    if(!WIFI_CONNECTED) 
-        return;
 
     char buffer[12];
     sprintf(buffer, "%.2f", value);
     esp_mqtt_client_publish(mqtt_client,topic,buffer,0,0,0);
 }
 
-void mqtt_task(void *pvParameters) {
+void mqtt_subscriber(void *pvParameters){
+
+    while(1)
+    {
+            vTaskDelay(1000 / portTICK_RATE_MS);
+            esp_mqtt_client_subscribe(mqtt_client, MQTT_TOPIC_USER_RELAY, 0);
+            esp_mqtt_client_subscribe(mqtt_client, MQTT_TOPIC_TEMP_SETPOINT, 0);
+            esp_mqtt_client_subscribe(mqtt_client, MQTT_TOPIC_SLEEP, 0);
+            esp_mqtt_client_subscribe(mqtt_client, MQTT_TOPIC_OTA, 0);
+            esp_mqtt_client_subscribe(mqtt_client, MQTT_TOPIC_RESET, 0);
+
+            while (!WIFI_CONNECTED){
+                vTaskDelay(1000 / portTICK_RATE_MS);
+                
+            };
+    }
+    
+}
+
+
+void mqtt_publisher(void *pvParameters) {
 
     esp_mqtt_client_config_t mqtt_cfg = {
         .uri = MQTT_URL,
@@ -87,21 +105,17 @@ void mqtt_task(void *pvParameters) {
     esp_mqtt_client_start(mqtt_client);
     xEventGroupWaitBits(mqtt_event_group, BIT0, false, true, portMAX_DELAY);
 
-    esp_mqtt_client_subscribe(mqtt_client, MQTT_TOPIC_USER_RELAY, 0);
-    esp_mqtt_client_subscribe(mqtt_client, MQTT_TOPIC_TEMP_SETPOINT, 0);
-    esp_mqtt_client_subscribe(mqtt_client, MQTT_TOPIC_SLEEP, 0);
-    esp_mqtt_client_subscribe(mqtt_client, MQTT_TOPIC_OTA, 0);
-    esp_mqtt_client_subscribe(mqtt_client, MQTT_TOPIC_RESET, 0);
 
     while (1) {
+            if (WIFI_CONNECTED) {
+                mqtt_send_data(MQTT_TOPIC_TEMP, temp);
+                mqtt_send_data(MQTT_TOPIC_CTRL_RELAY, relay_channel1);
+                mqtt_send_data(MQTT_TOPIC_EXT_ADC, ext_adc);
+                mqtt_send_data(MQTT_TOPIC_RTOS_FREE_MEM, xPortGetFreeHeapSize() / 1024.f);
+                mqtt_send_data(MQTT_TOPIC_RTOS_MIN_MEM, xPortGetMinimumEverFreeHeapSize() / 1024.f);
 
-
-            mqtt_send_data(MQTT_TOPIC_TEMP, temp);
-            mqtt_send_data(MQTT_TOPIC_CTRL_RELAY, relay_channel1);
-            mqtt_send_data(MQTT_TOPIC_EXT_ADC, ext_adc);
-            mqtt_send_data(MQTT_TOPIC_RTOS_FREE_MEM, xPortGetFreeHeapSize() / 1024.f);
-            mqtt_send_data(MQTT_TOPIC_RTOS_MIN_MEM, xPortGetMinimumEverFreeHeapSize() / 1024.f);
-            ESP_LOGI(TAG,"data submited");
+                ESP_LOGI(TAG,"data submited @ temp = %.02f", temp);
+            }
             vTaskDelay(5000 / portTICK_RATE_MS);
     }
 

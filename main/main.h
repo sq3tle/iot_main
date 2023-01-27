@@ -22,9 +22,6 @@
 #include "esp_https_ota.h"
 #include "esp_wifi.h"
 
-//ota server selection
-#define USE_SQ3TLE_OTA_SERVER false
-
 // atomic 
 bool relay_channel0;
 bool relay_channel1;

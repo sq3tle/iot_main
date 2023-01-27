@@ -1,13 +1,7 @@
 #include "main.h"
+#include "esp_crt_bundle.h"
 
 static const char* TAG = "ota";
-
-#if USE_SQ3TLE_OTA_SERVER
-extern const uint8_t server_cert_pem_start[] asm("_binary_lets_encrypt_cert_pem_start");
-extern const uint8_t server_cert_pem_end[] asm("_binary_lets_encrypt_cert_pem_end");
-#else
-#include "esp_crt_bundle.h"
-#endif
 
 static esp_err_t compare_version(esp_app_desc_t *new_app_info)
 {
@@ -35,13 +29,8 @@ void firmware_update_task(void *pvParameter){
     
     esp_err_t ota_finish_err = ESP_OK;
     esp_http_client_config_t config = {
-#if USE_SQ3TLE_OTA_SERVER
-        .url = "https://ota.sq3tle.dev/iot_main.bin",
-        .cert_pem = (char *)server_cert_pem_start,       
-#else
         .url = "https://github.com/sq3tle/iot_main/raw/master/build/iot_main.bin",
         .crt_bundle_attach = esp_crt_bundle_attach,
-#endif
         .keep_alive_enable = true,
         .skip_cert_common_name_check = false,
         .timeout_ms = 1500
