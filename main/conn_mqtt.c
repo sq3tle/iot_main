@@ -33,7 +33,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
     }
 
     if (strncmp(event->topic, MQTT_TOPIC_TEMP_SETPOINT, event->topic_len) == 0){
-        temp_setpoint = strtof(event->data, &(event->data)+(event->data_len-1));
+        temp_setpoint = strtof(event->data, &(event->data)+3);
         ESP_LOGI(TAG, "Updated temp_setpoint = %f", temp_setpoint);
         return;
     }
