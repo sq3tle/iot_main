@@ -43,7 +43,7 @@ void app_main(void) {
     oled_init();
     
     oled_clear();
-    oled_show("nowa wersja ota", 15, 0);
+    oled_show("litwo", 6, 0);
     vTaskDelay(2500 / portTICK_RATE_MS);
 
     init_network();

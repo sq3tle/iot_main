@@ -10,7 +10,7 @@
     "idf.pythonBinPathWin": "C:\\Users\\sq3tl\\.espressif\\python_env\\idf4.3_py3.8_env\\Scripts\\python.exe",
     "idf.toolsPathWin": "C:\\Users\\sq3tl\\.espressif",
     "cmake.configureOnOpen": true,
-    "idf.portWin": "COM12",
+    "idf.portWin": "COM13",
     "idf.flashType": "UART",
     "files.associations": {
         "*.inc": "c",
